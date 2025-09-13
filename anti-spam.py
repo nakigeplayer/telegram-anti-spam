@@ -18,6 +18,15 @@ async def check_message(client: Client, message: Message):
     if not message.chat or message.chat.id not in GROUP_IDS:
         return
 
+    if message.text and message.text.strip().lower().startswith("/where"):
+        user_id_str = str(message.from_user.id) if message.from_user else "No disponible"
+        chat_id_str = str(message.chat.id)
+        await message.reply(
+            f"User: {user_id_str}\nChat: {chat_id_str}",
+            quote=True
+        )
+        return
+
     if not message.from_user:
         print("Mensaje de admin anónimo, no se borra.")
         return
